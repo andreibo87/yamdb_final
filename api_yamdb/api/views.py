@@ -1,28 +1,26 @@
-from django.db import IntegrityError
 from django.core.exceptions import ValidationError
-
+from django.db import IntegrityError
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-
-from rest_framework import status, viewsets, filters
+from rest_framework import filters, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from reviews.models import Category, Comment, Genre, Review, Title
 from users.models import User
-from reviews.models import Title, Category, Genre, Review, Comment
+
 from .filters import TitlesFilter
 from .mixins import CustomMixSet
+from .permissions import (IsRoleAdmin, IsRoleAdminOrReadOnly, IsRoleAuthor,
+                          IsRoleModerator, ReadOnly)
+from .serializers import (CategorySerializer, CommentSerializer,
+                          EmailSerializer, GenreSerializer, ReviewSerializer,
+                          TitleReadSerializer, TitleWriteSerializer,
+                          TokenSerializer, UserSerializer)
 from .utils import send_confirmation_code
-from .serializers import (TitleReadSerializer, TitleWriteSerializer,
-                          CategorySerializer, GenreSerializer,
-                          ReviewSerializer, CommentSerializer,
-                          UserSerializer, EmailSerializer, TokenSerializer)
-from .permissions import (IsRoleAdmin, IsRoleAdminOrReadOnly,
-                          IsRoleAuthor, ReadOnly, IsRoleModerator)
 
 
 class TitleViewSet(viewsets.ModelViewSet):

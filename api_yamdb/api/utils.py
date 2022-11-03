@@ -1,5 +1,7 @@
 from secrets import token_hex
+
 from django.core.mail import send_mail
+
 from api_yamdb.settings import DEFAULT_FROM_EMAIL
 
 
