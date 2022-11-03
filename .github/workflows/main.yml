@@ -1,0 +1,39 @@
+name: api_yamdb workflow
+
+on: [push]
+
+jobs:
+  # Job №1 - покрытие тестами.
+  tests:
+    # «Раннер» — создание изолированного окружения с последней версией Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+    # Запуск готового скрипта actions checkout для клонирования репозитория
+    - uses: actions/checkout@v2
+    
+    # Шаг 1 : Установка питона (Set up Python)
+    - name: Set up Python
+      uses: actions/setup-python@v2 # запуск готового скрипта
+      with:
+        python-version: 3.7
+        
+    # Шаг 2 : Установка зависимостей (Install dependencies)
+    - name: Install dependencies
+      run: | 
+        # апгрейд пыпы
+        python -m pip install --upgrade pip
+        # установка flake8 
+        pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort pytest
+        # установка зависимостей проекта
+        pip install -r api_yamdb/requirements.txt 
+        
+    # Шаг 3 : Покрытие тестами 
+    - name: Test with flake8 and django tests
+      run: |
+        # запуск проверки проекта по flake8
+        python -m flake8 
+        # pytest
+        # перейди в папку с manage.py и запусти тесты проекта
+        # cd api_yamdb/
+        # python manage.py test
