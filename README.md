@@ -1,3 +1,7 @@
+![Python version](https://img.shields.io/badge/python-3.7-yellow) 
+![Django version](https://img.shields.io/badge/django-2.2-orange) 
+![workflow status](https://github.com/andreibo87/yamdb_final/actions/workflows/main.yml/badge.svg)
+
 #  Проект YaMDb
 Проект Yambd - база отзывов о произведениях искусства и не только. Версия V1.
 
