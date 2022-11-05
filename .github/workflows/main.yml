@@ -99,4 +99,19 @@ jobs:
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-            sudo docker compose up -d 
+            sudo docker compose up -d
+  
+  # Job 4 - отправка уведомления в Telegram          
+  send_message:
+    runs-on: ubuntu-latest
+    needs: deploy
+
+    steps:
+
+    # Шаг 1 : Отправить сообщение в Telegram
+    - name: send message
+      uses: appleboy/telegram-action@master # скрипт
+      with: # Используем "секретки" созданные на гите в Actions
+        to: ${{ secrets.TELEGRAM_TO }} # id кому отправить сообщение
+        token: ${{ secrets.TELEGRAM_TOKEN }} # токен бота 
+        message: ${{ github.workflow }} успешно выполнен!
